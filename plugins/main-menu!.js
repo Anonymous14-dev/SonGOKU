@@ -37,7 +37,7 @@ Opciones disponibles
       headerType: 4,
     }, { quoted: m });
 }
-handler.command = ['menu']
-handler.help = ['menu']
-handler.tags = ['main']
+handler.command = ['me']
+handler.help = ['me']
+handler.tags = ['ma']
 export default handler
