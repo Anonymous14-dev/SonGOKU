@@ -1,80 +1,67 @@
-import { join, dirname } from 'path';
-import { createRequire } from 'module';
-import { fileURLToPath } from 'url';
-import { setupMaster, fork } from 'cluster';
-import { watchFile, unwatchFile } from 'fs';
-import cfonts from 'cfonts';
-import { createInterface } from 'readline';
-import yargs from 'yargs';
-import chalk from 'chalk';
-console.log('\n✰ Iniciando SonGoku ✰');
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const require = createRequire(__dirname);
-const { name, description, author, version } = require(join(__dirname, './package.json'));
-const { say } = cfonts;
-const rl = createInterface(process.stdin, process.stdout);
-say('SonGokuBot\nBot', {
-font: 'block',
-align: 'center',
-colors: ['white']
-});
-say(`Multi Device`, {
-font: 'chrome',
-align: 'center',
-colors: ['red']
-});
-say(`Developed By • Dv Yer`, {
-font: 'console',
-align: 'center',
-colors: ['magenta']
-});
-var isRunning = false;
-function start(file) {
-if (isRunning) return;
-isRunning = true;
-let args = [join(__dirname, file), ...process.argv.slice(2)];
-say([process.argv[0], ...args].join(' '), {
-font: 'console',
-align: 'center',
-colors: ['green']
-});
-setupMaster({
-exec: args[0],
-args: args.slice(1),
-});
-let p = fork();
-p.on('message', data => {
-switch (data) {
-case 'reset':
-p.process.kill();
-isRunning = false;
-start.apply(this, arguments);
-break;
-case 'uptime':
-p.send(process.uptime());
-break;
+console.clear()
+console.log('🟢 CARGANDO...')
+
+import { join, dirname } from 'path'
+import { createRequire } from 'module'
+import { fileURLToPath } from 'url'
+import { setupMaster, fork } from 'cluster'
+import { watchFile, unwatchFile } from 'fs'
+import cfonts from 'cfonts'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const require = createRequire(__dirname)
+
+import { cleanPremiums } from "./lib/cleanPremium.js";
+
+// correr la limpieza cada hora (puedes ajustar ms)
+setInterval(() => {
+  cleanPremiums();
+}, 1000 * 60 * 60);
+
+cfonts.say('Tech-Bot V1', {
+  font: 'block',        
+  align: 'center',
+  gradient: ['cyan', 'magenta'],
+  env: 'node'
+})
+
+
+cfonts.say('Made by Wilker', {
+  font: 'console',     
+  align: 'center',
+  gradient: ['cyan', 'white'],
+  env: 'node'
+})
+
+let isWorking = false
+
+async function launch(scripts) {
+  if (isWorking) return
+  isWorking = true
+
+  for (const script of scripts) {
+    const args = [join(__dirname, script), ...process.argv.slice(2)]
+
+    setupMaster({
+      exec: args[0],
+      args: args.slice(1),
+    })
+
+    let child = fork()
+
+    child.on('exit', (code) => {
+      console.log(`⚠️ Proceso terminado con código ${code}`)
+      isWorking = false
+      launch(scripts)
+
+      if (code === 0) return
+      watchFile(args[0], () => {
+        unwatchFile(args[0])
+        console.log('🔄 Archivo actualizado, reiniciando...')
+        launch(scripts)
+      })
+    })
+  }
 }
-});
-p.on('exit', (_, code) => {
-isRunning = false;
-console.error('🚩 Error:\n', code);
-process.exit();
-if (code === 0) return;
-watchFile(args[0], () => {
-unwatchFile(args[0]);
-start(file);
-});
-});
-let opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse());
-if (!opts['test'])
-if (!rl.listenerCount()) rl.on('line', line => {
-p.emit('message', line.trim());
-});
-}
-process.on('warning', (warning) => {
-if (warning.name === 'MaxListenersExceededWarning') {
-console.warn('🚩 Se excedió el límite de Listeners en:');
-console.warn(warning.stack);
-}
-});
-start('SonGoku.js');
+
+launch(['SonGoku.js'])
