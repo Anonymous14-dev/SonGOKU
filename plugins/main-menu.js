@@ -17,7 +17,7 @@ let tags = {
   'nsfw': 'Nsfw', 
   'owner': 'Creador', 
   'advanced': 'Avanzado',
-  '+18': '+18',
+  '+18': 'descargas',
 }
 
 const defaultMenu = {
