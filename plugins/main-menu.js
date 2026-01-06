@@ -151,9 +151,9 @@ let img = await (await fetch(`https://i.ibb.co/6X35QcR/file.jpg`)).buffer()
 
 handler.help = ['menu']
 handler.tags = ['main']
-handler.command = ['menucompleto'] 
+handler.command = ['menu'] 
 handler.register = false 
-handler.group = true
+handler.group = false
 export default handler
 
 const more = String.fromCharCode(8206)
