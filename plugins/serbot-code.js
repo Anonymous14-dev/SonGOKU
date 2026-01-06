@@ -18,40 +18,29 @@ let crm4 = "IF9hdXRvcmVzcG9uZGVyLmpzIGluZm8tYm90Lmpz"
 let drm1 = ""
 let drm2 = ""
 let rtx = `
-╭━━━━➤〔 🤖 *SON-GOKU* 🤖 〕
-┃
-┃ 🚀 Convierte tu número en un 
-┃ *Sub-Bot Temporal* y controla el bot 
-┃ 
-╰━━━━━━━━━━━━━━━━━━━
+🎋 𝗩𝗶𝗻𝗰𝘂𝗹𝗮𝗰𝗶𝗼́𝗻 𝗽𝗼𝗿 𝗖𝗼́𝗱𝗶𝗴𝗼 𝗤𝗥
 
-📌 *Pasos para vincular:*
-┌ 1️⃣  Abre WhatsApp y toca los *⋮ tres*
-│ *puntos* (arriba derecha)
-├ 2️⃣  Pulsa en *Dispositivos*
-│ *vinculados*
-├ 3️⃣  Selecciona *Vincular con QR*
-└ 4️⃣  Escanea el *código QR*.
+📌 𝗣𝗮𝘀𝗼𝘀 𝗽𝗮𝗿𝗮 𝘃𝗶𝗻𝗰𝘂𝗹𝗮𝗿 𝘁𝘂 𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽:
+1️⃣ Abre 𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽 en tu teléfono  
+2️⃣ Pulsa ⋮ *Más opciones* → *Dispositivos vinculados*  
+3️⃣ Presiona *"Vincular un dispositivo"*  
+4️⃣ Escanea el código QR que se mostrará aquí
+`.trim()
 
-> Powered by: *Tech-Bot Team*`.trim()
+let rtx2 = `
+🍁 𝗩𝗶𝗻𝗰𝘂𝗹𝗮𝗰𝗶𝗼́𝗻 𝗽𝗼𝗿 𝗖𝗼́𝗱𝗶𝗴𝗼 𝗠𝗮𝗻𝘂𝗮𝗹 (8 dígitos)
 
-let rtx2 = `╭━━━━➤〔 🤖 *SON-GOKU* 🤖 〕
-┃
-┃ 🚀 Convierte tu número en un 
-┃ *Sub-Bot Temporal* y controla el bot 
-┃ 
-╰━━━━━━━━━━━━━━━━━━━
+📌 𝗣𝗮𝘀𝗼𝘀 𝗽𝗮𝗿𝗮 𝗵𝗮𝗰𝗲𝗿𝗹𝗼:
+1️⃣ Abre 𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽 en tu teléfono  
+2️⃣ Pulsa ⋮ *Más opciones* → *Dispositivos vinculados*  
+3️⃣ Presiona *"Vincular un dispositivo"*  
+4️⃣ Selecciona *"Con número"* e introduce el código mostrado  
 
-📌 *Pasos para vincular:*
-┌ 1️⃣  Abre WhatsApp y toca los *⋮ tres*
-│ *puntos* (arriba derecha)
-├ 2️⃣  Pulsa en *Dispositivos*
-│ *vinculados*
-├ 3️⃣  Selecciona *Vincular con el*
-│ *número de teléfono*
-└ 4️⃣  Ingresa el *código* para iniciar sesión con el bot.
-
-> Powered by: *SON GOKU TEAM*`.trim()
+⚠️ 𝗜𝗺𝗽𝗼𝗿𝘁𝗮𝗻𝘁𝗲:  
+- Algunos grupos pueden fallar al generar el código  
+- Recomendado: Solicítalo por privado al bot  
+⏳ El código es válido solo para este número y expira en pocos segundos.
+`.trim()
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -64,23 +53,12 @@ let time = global.db.data.users[m.sender].Subs + 120000
 
 const subBots = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])]
 const subBotsCount = subBots.length
-if (subBotsCount === 50) {
+if (subBotsCount === 30) {
 return m.reply(`No se han encontrado espacios para *Sub-Bots* disponibles.`)
 }
 
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
-let id
-let phoneNumber
-if (command === 'sercode') {
-  if (!args[0]) return m.reply('*_Ejemplo:_*' + usedPrefix + command + ' 57123456789')
-  phoneNumber = args[0].replace(/[^0-9]/g, '')
-  if (phoneNumber.length < 8) return m.reply('❌ *Número de teléfono inválido.*')
-  const [result] = await conn.onWhatsApp(phoneNumber)
-  if (!result || !result.exists) return m.reply('❌ *El número no está registrado en WhatsApp.*')
-  id = phoneNumber
-} else {
-  id = `${who.split`@`[0]}`
-}
+let id = `${who.split`@`[0]}`  //conn.getName(who)
 let pathYukiJadiBot = path.join(`./${jadi}/`, id)
 if (!fs.existsSync(pathYukiJadiBot)){
 fs.mkdirSync(pathYukiJadiBot, { recursive: true })
@@ -92,18 +70,16 @@ yukiJBOptions.args = args
 yukiJBOptions.usedPrefix = usedPrefix
 yukiJBOptions.command = command
 yukiJBOptions.fromCommand = true
-yukiJBOptions.phoneNumber = phoneNumber
 yukiJadiBot(yukiJBOptions)
 global.db.data.users[m.sender].Subs = new Date * 1
 } 
-
 handler.help = ['qr', 'code']
-handler.tags = ['other']
-handler.command = ['code', 'qr']
+handler.tags = ['serbot']
+handler.command = ['qr', 'code']
 export default handler 
 
 export async function yukiJadiBot(options) {
-let { pathYukiJadiBot, m, conn, args, usedPrefix, command, phoneNumber } = options
+let { pathYukiJadiBot, m, conn, args, usedPrefix, command } = options
 if (command === 'code') {
 command = 'qr'; 
 args.unshift('code')}
@@ -163,7 +139,7 @@ setTimeout(() => { conn.sendMessage(m.sender, { delete: txtQR.key })}, 30000)
 return
 } 
 if (qr && mcode) {
-let secret = await sock.requestPairingCode(phoneNumber || (m.sender.split`@`[0]))
+let secret = await sock.requestPairingCode((m.sender.split`@`[0]))
 secret = secret.match(/.{1,4}/g)?.join("")
 
 txtCode = await conn.sendMessage(m.chat, {text : rtx2}, { quoted: m })
@@ -237,7 +213,6 @@ let userName, userJid
 userName = sock.authState.creds.me.name || 'Anónimo'
 userJid = sock.authState.creds.me.jid || `${path.basename(pathYukiJadiBot)}@s.whatsapp.net`
 console.log(chalk.bold.cyanBright(`\n❒⸺⸺⸺⸺【• SUB-BOT •】⸺⸺⸺⸺❒\n│\n│ 🟢 ${userName} (+${path.basename(pathYukiJadiBot)}) conectado exitosamente.\n│\n❒⸺⸺⸺【• CONECTADO •】⸺⸺⸺❒`))
-await conn.sendMessage(m.chat, { text: `🟢 Sub-bot ${userName} (+${path.basename(pathYukiJadiBot)}) conectado exitosamente.` }, { quoted: m })
 sock.isInit = true
 global.conns.push(sock)
 await joinChannels(sock)
