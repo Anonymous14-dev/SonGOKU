@@ -18,7 +18,7 @@ setInterval(() => {
   cleanPremiums();
 }, 1000 * 60 * 60);
 
-cfonts.say('Tech-Bot V1', {
+cfonts.say('Son-Goku', {
   font: 'block',        
   align: 'center',
   gradient: ['cyan', 'magenta'],
