@@ -22,8 +22,8 @@ let tags = {
 
 const defaultMenu = {
   before: `  
-☞︎︎︎SonGokuBO☜︎︎︎
-⸼݇҉ֻ᠂⃟ꕥ─➤Github: github.com/YerTX2/SonGOKU 
+☞︎︎︎SonGokuBOT☜︎︎︎
+⸼݇҉ֻ᠂⃟ꕥ─➤Github: https://github.com/Anonymous14-dev/SonGOKU 
 ╭──────────────────
 ╰─🅸︎🅽︎🅵︎🅾︎
 │㆒⸼݇҉ֻ᠂⃟𓇽𝖐𝖎 : %limit
@@ -149,10 +149,10 @@ let img = await (await fetch(`https://i.ibb.co/6X35QcR/file.jpg`)).buffer()
   }
 }
 
-handler.help = ['menucompleto']
+handler.help = ['menu']
 handler.tags = ['main']
 handler.command = ['menucompleto'] 
-//handler.register = true 
+handler.register = false 
 handler.group = true
 export default handler
 
