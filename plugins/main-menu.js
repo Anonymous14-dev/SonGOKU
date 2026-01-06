@@ -138,7 +138,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
     // SOLO UNA IMAGEN FIJADA AQUÍ
-    let imgUrl = 'https://i.ibb.co/6X35QcR/file.jpg' // ← TU IMAGEN ÚNICA
+    let imgUrl = 'https://files.catbox.moe/8i8o3t.jpg' // ← TU IMAGEN ÚNICA
     
     let img = await (await fetch(imgUrl)).buffer()
     
