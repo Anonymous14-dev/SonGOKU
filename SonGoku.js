@@ -317,10 +317,10 @@ async function handleLogin() {
   loginMethod = loginMethod.toLowerCase().trim();
 
   if (loginMethod === 'code') {
-    let phoneNumber = await question(chalk.red('🔥 Ingresa el número de WhatsApp donde estará el bot (incluye código país, ej: 521XXXXXXXXXX):\n'));
+    let phoneNumber = await question(chalk.red('🔥 Ingresa el número de WhatsApp donde estará el bot (incluye código país, ej: 549XXXXXXXXXX):\n'));
     phoneNumber = phoneNumber.replace(/\D/g, '');
 
-    if (phoneNumber.startsWith('52') && phoneNumber.length === 12) {
+    if (phoneNumber.startsWith('54') && phoneNumber.length === 12) {
       phoneNumber = `521${phoneNumber.slice(2)}`;
     } else if (phoneNumber.startsWith('52') && phoneNumber.length === 10) {
       phoneNumber = `521${phoneNumber.slice(2)}`;
